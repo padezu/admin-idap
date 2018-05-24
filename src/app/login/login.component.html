@@ -1,21 +1,19 @@
 <div class="container">
+   <div class="alert alert-danger alert-dismissible fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong>
+        This alert box could indicate a dangerous or potentially negative action.
+  </div>
   <h1 class="welcome text-center">Welcome to <br> Ice Code</h1>
       <div class="card card-container">
       <h2 class='login_title text-center'>Login</h2>
-      <hr>
-
-          <form class="form-signin">
+          <form class="form-signin" (submit)="loginUser($event)">
               <span id="reauth-email" class="reauth-email"></span>
               <p class="input_title">Email</p>
-              <input type="text" id="inputEmail" class="login_box" placeholder="user01@IceCode.com" required autofocus>
+              <input type="text" id="usuario" class="login_box" placeholder="Usuario" required autofocus>
               <p class="input_title">Password</p>
-              <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
-              <div id="remember" class="checkbox">
-                  <label>
-                      
-                  </label>
-              </div>
-              <button class="btn btn-lg btn-primary" type="submit">Login</button>
+              <input type="password" id="password" class="login_box" placeholder="Contraseña" required>
+              <button class="btn btn-lg btn-primary" type="submit" value="submit">Login</button>
           </form><!-- /form -->
       </div><!-- /card-container -->
-  </div><!-- /container -->
+</div><!-- /container -->

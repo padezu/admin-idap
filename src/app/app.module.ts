@@ -6,6 +6,9 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -13,11 +16,23 @@ import { LoginComponent } from './login/login.component';
         HeroesComponent,
         HeroDetailComponent,
         MessagesComponent,
-        LoginComponent
+        LoginComponent,
+        HomeComponent
     ],
     imports: [
         BrowserModule,
-        FormsModule
+        FormsModule,
+        HttpClientModule,
+        RouterModule.forRoot([
+            {
+                path: 'home',
+                component: HomeComponent
+            },
+            {
+                path: '',
+                component: LoginComponent
+            }
+        ])
     ],
     providers: [
         // no need to place any providers due to the `providedIn` flag...
