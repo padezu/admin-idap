@@ -1,42 +1,48 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './heroes/heroes.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { MessagesComponent } from './messages/messages.component';
-import { LoginComponent } from './login/login.component';
+import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
-import { RouterModule } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppMaterialModule } from './app-material/app-material.module';
+import { PagosComponent } from './pagos/pagos.component';
+import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminsComponent } from './admins/admins.component';
+import { SucursalesComponent } from './sucursales/sucursales.component';
+import { AlumnosComponent } from './alumnos/alumnos.component';
+import { FacturasComponent } from './facturas/facturas.component';
+import { MatSelectModule } from '@angular/material';
+
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HeroesComponent,
-        HeroDetailComponent,
-        MessagesComponent,
-        LoginComponent,
-        HomeComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        RouterModule.forRoot([
-            {
-                path: 'home',
-                component: HomeComponent
-            },
-            {
-                path: '',
-                component: LoginComponent
-            }
-        ])
-    ],
-    providers: [
-        // no need to place any providers due to the `providedIn` flag...
-    ],
-    bootstrap: [ AppComponent ]
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    LoginComponent,
+    PagosComponent,
+    AdminsComponent,
+    SucursalesComponent,
+    AlumnosComponent,
+    FacturasComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    MatSelectModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AppMaterialModule,
+    ToastrModule.forRoot()
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

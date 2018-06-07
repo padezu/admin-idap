@@ -1,19 +1,22 @@
-<div class="container">
-   <div class="alert alert-danger alert-dismissible fade in">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Error!</strong>
-        This alert box could indicate a dangerous or potentially negative action.
-  </div>
-  <h1 class="welcome text-center">Welcome to <br> Ice Code</h1>
-      <div class="card card-container">
-      <h2 class='login_title text-center'>Login</h2>
-          <form class="form-signin" (submit)="loginUser($event)">
-              <span id="reauth-email" class="reauth-email"></span>
-              <p class="input_title">Email</p>
-              <input type="text" id="usuario" class="login_box" placeholder="Usuario" required autofocus>
-              <p class="input_title">Password</p>
-              <input type="password" id="password" class="login_box" placeholder="Contraseña" required>
-              <button class="btn btn-lg btn-primary" type="submit" value="submit">Login</button>
-          </form><!-- /form -->
-      </div><!-- /card-container -->
-</div><!-- /container -->
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>Please login to continue</p>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="User" formControlName="userName" required>
+          <mat-error *ngIf="isFieldInvalid('userName')">
+            Please inform your user name
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="Password" formControlName="password" required>
+          <mat-error *ngIf="isFieldInvalid('userName')">
+            Please inform your password
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

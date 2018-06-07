@@ -1,0 +1,97 @@
+<div class="container">
+  <h4>Sucursales</h4>
+  <br>
+  <form>
+      <div class="row">
+          <div class="col-sm">
+              <mat-form-field>
+                  <mat-select placeholder="Sucursales" [(ngModel)]="selectedValue" name="sucursal">
+                    <mat-option *ngFor="let sucur of sucurs" [value]="sucur">
+                      {{sucur.Suc_Nombre}} - {{sucur.Suc_Prefij}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+              &nbsp;&nbsp;
+              <button *ngIf = "selectedValue != undefined" mat-button type="reset" color="accent" ng-click="reset()">
+                  Limpiar
+              </button>
+          </div>
+      </div>
+      <div *ngIf = "selectedValue != undefined; else other_content">
+          <div class="row">
+              <div class="col-sm">
+                  <mat-form-field>
+                      <input matInput placeholder="Nombre"  value="{{selectedValue.Suc_Nombre}}">
+                  </mat-form-field>
+              </div>
+              <div class="col-sm">
+                  <mat-form-field>
+                      <input matInput placeholder="Prefijo" value="{{selectedValue.Suc_Prefij}}">
+                  </mat-form-field>
+              </div>
+              <div class="col-sm">
+                  <!--mat-form-field>
+                      <input matInput placeholder="Estatus" value="{{selectedValue.Suc_Estatu}}">
+                  </mat-form-field-->
+                  <mat-form-field>
+                      <mat-select placeholder="Estatus" [(ngModel)]="selectedValue2" name="estatus">
+                        <mat-option *ngFor="let statu of estatus" [value]="statu.value">
+                          {{statu.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                  
+                </div>
+                <div class="col-sm">
+                    
+                </div>
+                <div class="col-sm">
+                  <button mat-raised-button color="primary">Eliminar</button>        
+                  &nbsp;&nbsp;<button mat-raised-button color="primary">Modificar</button>
+                </div>
+            </div>
+      </div>
+      <ng-template #other_content>
+         <br>
+         <div class="row">
+            <div class="col-sm">
+                <mat-form-field>
+                    <input matInput placeholder="Nombre"  value="">
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field>
+                    <input matInput placeholder="Prefijo" value="">
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <!--mat-form-field>
+                    <input matInput placeholder="Estatus" value="">
+                </mat-form-field-->
+                <mat-form-field>
+                    <mat-select placeholder="Estatus" [(ngModel)]="selectedValue2" name="estatus">
+                      <mat-option *ngFor="let statu of estatus" [value]="statu.value">
+                        {{statu.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-sm">
+                
+              </div>
+              <div class="col-sm">
+                  
+              </div>
+              <div class="col-sm">
+                <button mat-raised-button color="primary">Alta</button>       
+              </div>
+          </div>
+      </ng-template>
+  </form>
+</div>
