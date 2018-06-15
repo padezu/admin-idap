@@ -1,8 +1,11 @@
 export class sucursal {
-    Suc_IDSucu: string;
-    Suc_Nombre: string;
-    Suc_Prefij: string;
-    Suc_Estatu: string;
-    Suc_FecAlt: string;
+    constructor(
+        public Suc_IDSucu: string,
+        public Suc_Nombre: string,
+        public Suc_Prefij: string,
+        public Suc_Estatu: string,
+        public Suc_FecAlt: string
+    ){}
 }
+
   

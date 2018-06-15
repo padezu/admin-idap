@@ -1,97 +1,74 @@
+
 <div class="container">
   <h4>Sucursales</h4>
   <br>
-  <form>
-      <div class="row">
-          <div class="col-sm">
-              <mat-form-field>
-                  <mat-select placeholder="Sucursales" [(ngModel)]="selectedValue" name="sucursal">
-                    <mat-option *ngFor="let sucur of sucurs" [value]="sucur">
-                      {{sucur.Suc_Nombre}} - {{sucur.Suc_Prefij}}
-                    </mat-option>
-                  </mat-select>
-              </mat-form-field>
-              &nbsp;&nbsp;
-              <button *ngIf = "selectedValue != undefined" mat-button type="reset" color="accent" ng-click="reset()">
-                  Limpiar
-              </button>
-          </div>
-      </div>
-      <div *ngIf = "selectedValue != undefined; else other_content">
-          <div class="row">
-              <div class="col-sm">
-                  <mat-form-field>
-                      <input matInput placeholder="Nombre"  value="{{selectedValue.Suc_Nombre}}">
-                  </mat-form-field>
-              </div>
-              <div class="col-sm">
-                  <mat-form-field>
-                      <input matInput placeholder="Prefijo" value="{{selectedValue.Suc_Prefij}}">
-                  </mat-form-field>
-              </div>
-              <div class="col-sm">
-                  <!--mat-form-field>
-                      <input matInput placeholder="Estatus" value="{{selectedValue.Suc_Estatu}}">
-                  </mat-form-field-->
-                  <mat-form-field>
-                      <mat-select placeholder="Estatus" [(ngModel)]="selectedValue2" name="estatus">
-                        <mat-option *ngFor="let statu of estatus" [value]="statu.value">
-                          {{statu.viewValue}}
-                        </mat-option>
-                      </mat-select>
-                  </mat-form-field>
-              </div>
+  <div  class="row">
+    <div class="col-md-auto">
+    <form #formSucursal="ngForm" (ngSubmit)="onSubmit(); formSucursal.resetForm()">
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="Nombre" type="text" name="nombre" 
+                #nombre="ngModel" [(ngModel)]="sucursal.Suc_Nombre" required [readonly]="isDelete">
+                <mat-error *ngIf="nombre.touched && !nombre.valid">
+                        Nombre de sucursal invalido
+                </mat-error>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <input style="text-transform:uppercase" matInput placeholder="Prefijo" type="text" 
+                name="prefijo" #prefijo="ngModel" [(ngModel)]="sucursal.Suc_Prefij" 
+                maxlength="3" required pattern="[a-zA-Z]+" [readonly]="isDelete">
+                <mat-error *ngIf="prefijo.touched && !prefijo.valid">
+                        Prefijo no valido
+                </mat-error>
+            </mat-form-field>
+        </p>
+        <div *ngIf="tipoAccion == 1">
+            <button mat-raised-button type="submit" color="primary" [disabled]="!formSucursal.form.valid">Guardar</button>
+        </div>
+        <div *ngIf="tipoAccion == 3">
+            <button class="btn btn-info" style="min-width: 88px" type="submit" [disabled]="!formSucursal.form.valid">Editar</button>
+            <button mat-button type="reset" color="accent" (click)="limpiar();formSucursal.resetForm()">
+                    Limpiar
+            </button>
+        </div>
+        <div *ngIf="tipoAccion == 2">
+                <button mat-raised-button type="submit" color="warn" [disabled]="!formSucursal.form.valid">Eliminar</button>
+                <button mat-button type="reset" color="accent" (click)="limpiar();formSucursal.resetForm()">
+                        Limpiar
+                </button>
             </div>
-            <div class="row">
-                <div class="col-sm">
-                  
-                </div>
-                <div class="col-sm">
-                    
-                </div>
-                <div class="col-sm">
-                  <button mat-raised-button color="primary">Eliminar</button>        
-                  &nbsp;&nbsp;<button mat-raised-button color="primary">Modificar</button>
-                </div>
-            </div>
-      </div>
-      <ng-template #other_content>
-         <br>
-         <div class="row">
-            <div class="col-sm">
-                <mat-form-field>
-                    <input matInput placeholder="Nombre"  value="">
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field>
-                    <input matInput placeholder="Prefijo" value="">
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <!--mat-form-field>
-                    <input matInput placeholder="Estatus" value="">
-                </mat-form-field-->
-                <mat-form-field>
-                    <mat-select placeholder="Estatus" [(ngModel)]="selectedValue2" name="estatus">
-                      <mat-option *ngFor="let statu of estatus" [value]="statu.value">
-                        {{statu.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-              <div class="col-sm">
-                
-              </div>
-              <div class="col-sm">
-                  
-              </div>
-              <div class="col-sm">
-                <button mat-raised-button color="primary">Alta</button>       
-              </div>
-          </div>
-      </ng-template>
-  </form>
-</div>
+    </form>
+    </div>
+    <div  *ngIf="sucurs"  class="col-sm">
+        <table class="table table-dark" style="width: 650px">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Prefijo</th>
+                    <th scope="col">Fecha de Alta</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sucur of sucurs">
+                    <th scope="row">{{sucur.Suc_IDSucu}}</th>
+                    <td>{{sucur.Suc_Nombre}}</td>
+                    <td>{{sucur.Suc_Prefij}}</td>
+                    <td>{{sucur.Suc_FecAlt | date:'MM/dd/yyyy'}}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-info" (click)="editar(sucur)">Editar</button>
+                            <button type="button" class="btn btn-danger" (click)="eliminar(sucur)">Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  <div  *ngIf="!sucurs"  class="col-sm">
+      Cargando sucursales...
+  </div>
