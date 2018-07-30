@@ -1,4 +1,197 @@
 <div class="container">
-    <h4>Alumnos</h4>
-</div>
+<h4>
+    Alumnos
+    <button  *ngIf="!isEditing" mat-icon-button color="primary" data-toggle="collapse" data-target="#collapseFormAlumno" aria-expanded="false" aria-controls="collapseFormAlumno" (click)="alta()">
+        <mat-icon aria-label="Agregar alumno">person_add</mat-icon>
+    </button>
+</h4>
+<form #formAlumno="ngForm" (ngSubmit)="onSubmit(); formAlumno.resetForm()" autocomplete="off">
+    <div class="collapse" id="collapseFormAlumno">
+        <div class="card card-body">
+            <div class="row"> 
+                <div class="col"><input type="password" style="display: none;"/></div>
+                <div class="col-sm">
+                    <p>
+                    <mat-form-field style="width: 100%;">
+                        <mat-select placeholder="Sucursal" [(ngModel)]="sucursalForm.Suc_IDSucu" name="sucursalForm" [disabled]="!isAdmin">
+                            <mat-option *ngFor="let sucursalForm of sucursalesForm" [value]="sucursalForm.Suc_IDSucu">
+                                {{sucursalForm.Suc_Nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    </p>  
+                </div>
+                <div class="col-sm">
+                    <p>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Nombre" type="text" name="nombre"
+                            #nombre="ngModel" [(ngModel)]="alumno.Alu_Nombre" required [readonly]="isDelete">
+                            <mat-error *ngIf="nombre.touched && !nombre.valid">
+                                Nombre no valido
+                            </mat-error>
+                        </mat-form-field>
+                    </p>
+                </div>
+                <div class="col-sm" >
+                    <p>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Apellido paterno" type="text" name="appPaterno"
+                            #appPaterno="ngModel" [(ngModel)]="alumno.Alu_ApePat" required [readonly]="isDelete">
+                            <mat-error *ngIf="appPaterno.touched && !appPaterno.valid">
+                                Apellido paterno no valido
+                            </mat-error>
+                        </mat-form-field>
+                    </p>   
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row"> 
+                <div class="col"></div>
+                <div class="col-sm">
+                    <p>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Apellido materno" type="text" name="appMaterno"
+                            #appMaterno="ngModel" [(ngModel)]="alumno.Alu_ApeMat" required [readonly]="isDelete">
+                            <mat-error *ngIf="appMaterno.touched && !appMaterno.valid">
+                                Apellido no valido
+                            </mat-error>
+                        </mat-form-field>
+                    </p>
+                </div>
+                <div class="col-sm">
+                    <p>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Email" type="email" name="email"
+                            #email="ngModel" [(ngModel)]="alumno.Alu_Usuari" required [readonly]="isDelete">
+                            <mat-error *ngIf="email.touched && !email.valid">
+                                Email no valido
+                            </mat-error>
+                        </mat-form-field>
+                    </p>
+                </div>
+                <div class="col-sm" >
+                    <p>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Contraseña" type="password" name="password"
+                            #password="ngModel" [(ngModel)]="alumno.Alu_Passwo" required [readonly]="isDelete">
+                            <mat-error *ngIf="password.touched && !password.valid">
+                                Contraseña no valida
+                            </mat-error>
+                        </mat-form-field>
+                    </p>   
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-sm" >
+                    <p>
+                        <mat-form-field style="width: 100%;">
+                            <input matInput placeholder="Matricula" type="text" name="matricula"
+                            #matricula="ngModel" [(ngModel)]="alumno.Alu_Matric" [readonly]="isDelete">
+                            <mat-error *ngIf="matricula.touched && !matricula.valid">
+                                Matricula no valida
+                            </mat-error>
+                        </mat-form-field>
+                    </p>  
+                </div>
+                <div class="col-sm" >
 
+                </div>
+                <div class="col-sm" >
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-sm" ></div>
+                <div class="col-sm" ></div>
+                <div class="col-sm" > 
+                    <div *ngIf="tipoAccion == 1">
+                        <button mat-raised-button type="submit" color="primary" [disabled]="!formAlumno.form.valid" data-toggle="collapse" data-target="#collapseFormAlumno" aria-expanded="false" aria-controls="collapseFormAlumno">
+                            <span>Guardar</span>
+                        </button>
+                    </div>
+                    <div *ngIf="tipoAccion == 3">
+                        <button mat-button type="reset" color="accent" (click)="limpiar();formAlumno.resetForm()" data-toggle="collapse" data-target="#collapseFormAlumno" aria-expanded="false" aria-controls="collapseFormAlumno">
+                            Limpiar
+                        </button>
+                        <button mat-raised-button type="submit" color="primary" [disabled]="!formAlumno.form.valid" data-toggle="collapse" data-target="#collapseFormAlumno" aria-expanded="false" aria-controls="collapseFormAlumno">
+                            <span>Editar</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+</form>
+<br/>
+<hr/>
+<div class="row">
+    <div class="col">
+        <p>
+            <mat-form-field>
+                <mat-select placeholder="Sucursal busqueda" [(ngModel)]="sucursal.Suc_IDSucu" name="sucursal" [disabled]="!isAdmin" (ngModelChange)="findChange()">
+                    <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal.Suc_IDSucu">
+                        {{sucursal.Suc_Nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </p>                   
+    </div>  
+</div>
+<table class="table table-bordered" *ngIf="alumnos">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Alumno</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Fecha de Alta</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Sucursal</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alumno of alumnos">
+            <td>{{alumno.Alu_IDAlum}}</td>
+            <td>{{alumno.Alu_Nombre}}</td>
+            <td>{{alumno.Alu_Usuari}}</td>
+            <td>{{alumno.Alu_FecAlt | date:'dd/MM/yyyy'}}</td>
+            <td>{{alumno.Tip_Descri}}</td>
+            <td>{{alumno.Suc_Nombre}}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example" *ngIf="!isAlta">
+                    <button mat-icon-button color="primary" data-toggle="collapse" data-target="#collapseFormAlumno" aria-expanded="false" aria-controls="collapseFormAlumno" (click)="editar(alumno)">
+                        <mat-icon aria-label="">border_color</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" *ngIf="!isEditing" (click)="delete(alumno)" data-toggle="modal" data-target="#exampleModal">
+                        <mat-icon aria-label="">delete</mat-icon>
+                    </button>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+</table>
+<span *ngIf="!alumnos"><h4>No existen alumnos en esta sucursal</h4></span>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">¿Desea dar de baja al alumno? </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    {{alumnoModal.Alu_Usuari}}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteModal()">Aceptar</button>
+                </div>
+              </div>
+     </div>
+</div>
+</div>

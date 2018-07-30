@@ -16,7 +16,8 @@ import { AdminsComponent } from './admins/admins.component';
 import { SucursalesComponent } from './sucursales/sucursales.component';
 import { AlumnosComponent } from './alumnos/alumnos.component';
 import { FacturasComponent } from './facturas/facturas.component';
-import { MatSelectModule } from '@angular/material';
+import { MatSelectModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule } from '@angular/material';
+
 
 
 @NgModule({
@@ -35,6 +36,11 @@ import { MatSelectModule } from '@angular/material';
     BrowserModule,
     FormsModule,
     MatSelectModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatRippleModule,
+    MatInputModule,
+    MatIconModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,

@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
             user.Adm_Menus = arrayMenus.map((menu: any) => new Menu(menu));
             this.authService.setUserSession(user);
             this.authService.setIsLoggedIn()
-            this.router.navigate(['/admins']);
+            this.router.navigate(['/alumnos']);
           }else{            
             this.showError(res["Mensaje"]);
           }

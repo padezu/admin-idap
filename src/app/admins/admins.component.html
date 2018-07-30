@@ -1,3 +1,143 @@
-<div class="container">
-    <h4>Administración de personal</h4>
+ <div class="container">
+        <h4>
+            Administración de personal    
+            <button  *ngIf="!isEditing" mat-icon-button color="primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" (click)="alta()">
+                <mat-icon aria-label="Agregar usuario">person_add</mat-icon>
+            </button>
+        </h4>
+        <hr/>
+        <form #formUsuario="ngForm" (ngSubmit)="onSubmit(); formUsuario.resetForm()" autocomplete="off">
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                        <div class="row">
+                                <div class="col">
+                                     
+                                </div>  
+                                <div class="col" >
+                                      <p>
+                                          <mat-form-field style="width: 100%;">
+                                              <mat-select placeholder="Sucursal" [(ngModel)]="sucursal.Suc_IDSucu" name="sucursal" required>
+                                                  <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal.Suc_IDSucu">
+                                                      {{sucursal.Suc_Nombre}}
+                                                  </mat-option>
+                                              </mat-select>
+                                          </mat-form-field>
+                                      </p>
+                                      <p>
+                                          <input type="password" style="display: none;"/>
+                                          <mat-form-field style="width: 100%">
+                                              <input matInput placeholder="Contraseña" type="password" name="password" 
+                                              #password="ngModel" [(ngModel)]="user.Adm_Passwo" required [readonly]="isDelete">
+                                              <mat-error *ngIf="password.touched && !password.valid" autocomplete="off">
+                                                  Contraseña no valida
+                                              </mat-error>
+                                          </mat-form-field>
+                                      </p>
+                                </div>
+                                <div class="col" >
+                                      <p>
+                                      <mat-form-field style="width: 100%;">
+                                              <input matInput placeholder="Usuario" type="text" name="usuario"
+                                              #usuario="ngModel" [(ngModel)]="user.Adm_Usuari" required [readonly]="isDelete">
+                                              <mat-error *ngIf="usuario.touched && !usuario.valid">
+                                                  Usuario no valido
+                                              </mat-error>
+                                      </mat-form-field>
+                                      </p>
+                                      <p>
+                                          <mat-form-field style="width: 100%;">
+                                              <mat-select placeholder="Tipo" [(ngModel)]="tipo.Tip_TipoUs" name="tipo" required>
+                                                  <mat-option *ngFor="let tipo of tipos" [value]="tipo.Tip_TipoUs">
+                                                          {{tipo.Tip_Descri}}
+                                                  </mat-option>
+                                              </mat-select>
+                                          </mat-form-field>
+                                      </p>
+                                  </div>
+                                <div class="col" >
+                                     
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col" >
+                                     
+                                  </div>
+                                  <div class="col-5">
+                                      <div style="float: right;">
+                                          <div *ngIf="tipoAccion == 1">
+                                                <button mat-raised-button type="submit" color="primary" [disabled]="!formUsuario.form.valid" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                    <span>Guardar</span>
+                                                </button>
+                                          </div>
+                                          <div *ngIf="tipoAccion == 3">
+                                            <button mat-button type="reset" color="accent" (click)="limpiar();formUsuario.resetForm()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        Limpiar
+                                            </button>
+                                            <button mat-raised-button type="submit" color="primary" [disabled]="!formUsuario.form.valid" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                <span>Editar</span>
+                                            </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col">
+                                     
+                                  </div>      
+                              </div>  
+                </div>
+            </div>
+            </form>
+            <hr/>
+            <table class="table table-bordered" *ngIf="usuarios">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Sucursal</th>
+                        <th scope="col">Fecha de Alta</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let usuario of usuarios">
+                        <td>{{usuario.Adm_IDUsua}}</td>
+                        <td>{{usuario.Adm_Usuari}}</td>
+                        <td>{{usuario.Suc_Nombre}}</td>
+                        <td>{{usuario.Adm_FecAlt | date:'dd/MM/yyyy'}}</td>
+                        <td>{{usuario.Tip_Descri}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example" *ngIf="!isAlta">
+                                <button mat-icon-button color="primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" (click)="editar(usuario)">
+                                    <mat-icon aria-label="">border_color</mat-icon>
+                                </button>
+                                <button mat-icon-button color="warn" *ngIf="!isEditing" (click)="delete(usuario)" data-toggle="modal" data-target="#exampleModal">
+                                    <mat-icon aria-label="">delete</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+            </table>
+       <span *ngIf="!usuarios"><h4>No existen usuarios registrados</h4></span>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">¿Desea dar de baja al usuario? </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        {{userModal.Adm_Usuari}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteModal()">Aceptar</button>
+                    </div>
+                  </div>
+             </div>
+    </div>
 </div>
+
+
